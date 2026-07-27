@@ -68,11 +68,11 @@ def generate_stylish_text(text):
         "italic": "𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘙𝘠𝘘𝘙𝘈𝘛𝘜𝘝𝘞𝘌𝘎𝘞𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻0123456789",
         "gothic": "𝔄𝔅ℭ𝔇𝔈𝔉𝔤ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔑𝔛𝔜ℨ𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷0123456789",
         "bold": "𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗",
-        "double": "𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡"
+        "double": "𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝟘𝟙𝚰𝚱𝚲𝚳𝚴𝚵𝚶𝚷𝚸𝚹𝚺𝚻𝚼𝚽𝚾𝚿"
     }
 
     def convert(t, f_key):
-        target = fonts[f_key]
+        target = fonts.get(f_key, fonts["script"])
         mapping = {normal_chars[i]: target[i] for i in range(len(normal_chars)) if i < len(target)}
         return "".join(mapping.get(c, c) for c in t)
 
@@ -369,8 +369,13 @@ async def process_tts(update: Update, context: ContextTypes.DEFAULT_TYPE):
     return ConversationHandler.END
 
 async def process_translate(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    translated = translator.translate(update.message.text, dest='bn')
-    res = f"<b>মূল লেখা:</b> {html.escape(update.message.text)}\n\n<b>বাংলা অনুবাদ:</b>\n{html.escape(translated.text)}"
+    try:
+        translated = translator.translate(update.message.text, dest='bn')
+        trans_text = translated.text
+    except Exception:
+        trans_text = "দুঃখিত, অনুবাদ করতে সমস্যা হয়েছে।"
+
+    res = f"<b>মূল লেখা:</b> {html.escape(update.message.text)}\n\n<b>বাংলা অনুবাদ:</b>\n{html.escape(trans_text)}"
     await update.message.reply_text(format_card("TRANSLATION RESULT", res), parse_mode='HTML', reply_markup=get_back_keyboard())
     return ConversationHandler.END
 

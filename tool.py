@@ -22,8 +22,8 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 translator = Translator()
 
 # ==================== CONFIGURATION ====================
-BOT_TOKEN = "8536829402:AAHMSVB7t1uZ91reDgvvzxXhkUGgJ9MmN9w"
-ADMIN_ID = 6535070545
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+ADMIN_ID = int(os.getenv("ADMIN_ID", "0"))
 # =======================================================
 
 # Database (In-Memory)

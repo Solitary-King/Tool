@@ -1,1 +1,1 @@
-web: python tool.py
+web: gunicorn tool:app

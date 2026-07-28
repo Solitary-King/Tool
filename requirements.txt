@@ -1,4 +1,4 @@
-python-telegram-bot
+python-telegram-bot>=21.0
 gtts
 googletrans==4.0.0-rc1
 yt-dlp

@@ -1,5 +1,6 @@
-python-telegram-bot==22.2
-requests
-gTTS
-deep-translator
+python-telegram-bot
+gtts
+googletrans==4.0.0-rc1
 yt-dlp
+requests
+Flask

@@ -22,7 +22,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 translator = Translator()
 
 # ==================== CONFIGURATION ====================
-BOT_TOKEN = "8536829402:AAHMSVB7t1uZ91reDgvvzxXhkUGgJ9MmN9w"
+BOT_TOKEN = "8536829402:AAEdd7A8uKVgiqZ2RkKkNPbYE4iy6wgu58A"
 ADMIN_ID = 6535070545
 # =======================================================
 

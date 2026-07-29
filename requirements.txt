@@ -1,7 +1,0 @@
-python-telegram-bot
-gtts
-googletrans==4.0.0-rc1
-yt-dlp
-requests
-flask
-gunicorn
